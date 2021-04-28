@@ -1,0 +1,11 @@
+---
+# tasks file for hostname
+- name: "Changing Hostname of Hadoop Cluster Nodes"
+  hostname:
+          name: "{{ hostname }}"
+  when: false
+- name: "Updating /etc/hosts File on All Cluster Nodes"
+  template:
+        src: "hosts.j2"
+        dest: "/etc/hosts"
+        force: yes

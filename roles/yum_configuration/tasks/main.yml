@@ -1,0 +1,25 @@
+---
+# tasks file for yum_configuration
+- name: "Creating MountPoint Directory for RHEL8 ISO DVD"
+  file:
+          state: directory
+          path: "{{ Mountpoint_Directory_Path }}"
+- name: "Mounting RHEL8 ISO DVD to MountPoint Directory"
+  mount:
+          src: "/dev/cdrom"
+          path: "{{ Mountpoint_Directory_Path }}"
+          state: "mounted"
+          fstype: "iso9660"
+- name: "Adding Yum Repositories"
+  yum_repository:
+          name: "{{ item.name }}"
+          description: "{{ item.description }}"
+          file: "{{ Yum_Repository_Filename }}"
+          baseurl: file://{{ Mountpoint_Directory_Path }}{{ item.baseurl_dir }}
+          gpgcheck: no
+  loop: "{{ Yum_Repository_Sections }}"
+- name: "Installing epel-release package"
+  yum:
+          name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+          state: "present"
+          disable_gpg_check: yes

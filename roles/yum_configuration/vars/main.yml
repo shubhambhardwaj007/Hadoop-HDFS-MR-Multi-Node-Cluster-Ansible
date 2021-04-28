@@ -1,0 +1,14 @@
+---
+# vars file for yum_configuration
+
+Mountpoint_Directory_Path: "/rhel8_iso_mountpoint/"
+
+Yum_Repository_Filename: "rhel8_iso"
+
+Yum_Repository_Sections:
+        - name: "BaseOS"
+          description: "RHEL8 ISO DVD BASEOS Repo"
+          baseurl_dir: "BaseOS"
+        - name: "AppStream"
+          description: "RHEL8 ISO DVD AppStream Repo"
+          baseurl_dir: "AppStream"
