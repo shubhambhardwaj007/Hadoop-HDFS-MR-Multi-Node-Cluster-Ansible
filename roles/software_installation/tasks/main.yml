@@ -1,0 +1,33 @@
+---
+# tasks file for software_installation
+- name: "Checking if Java JDK already installed"
+  command: "java -version"
+  ignore_errors: true
+  changed_when: false
+  register: jdk_install_check
+
+
+- debug:
+        msg: "Java JDK not installed on your system"
+  when: jdk_install_check.rc != 0
+  notify: jdk_local_check
+
+- debug:
+        msg: "Java JDK already installed on your system"
+  when: jdk_install_check.rc == 0
+
+- debug:
+        msg: "Java JDK Software Present locally at specified location"
+  when: jdk_local_check_status.rc == 0
+  notify: jdk_local_install
+
+- debug:
+        msg: "Java JDK Software not Present locally at specified location"
+  when: jdk_local_check_status.rc != 0
+  notify: jdk_download
+
+- name: "Downloading Java Jdk Software"
+  get_url:
+          url: "https://repo.huaweicloud.com/java/jdk/8u171-b11/jdk-8u171-linux-x64.rpm"
+          dest: "{{ Java_Software_Directory }}"
+  when: jdk_local_check.rc != 0

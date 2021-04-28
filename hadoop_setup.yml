@@ -3,3 +3,4 @@
   roles:
           - role: "yum_configuration"
           - role: "hostname"
+          - role: "software_installation"
