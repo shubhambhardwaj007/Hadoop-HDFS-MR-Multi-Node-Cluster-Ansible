@@ -1,14 +1,2 @@
 ---
 # handlers file for software_installation---
-- name: jdk_local_check
-  command: "ls -a {{ Java_Software_Directory }}{{ Java_Software_Version }}"
-  register: jdk_local_check_status
-  changed_when: false
-  ignore_errors: true
-
-
-- name: jdk_download
-  get_url:
-          url: "https://repo.huaweicloud.com/java/jdk/8u171-b11/jdk-8u171-linux-x64.rpm"
-          dest: "{{ Java_Software_Directory }}"
-  register: jdk_download_status

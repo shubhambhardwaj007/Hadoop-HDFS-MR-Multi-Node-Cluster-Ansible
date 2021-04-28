@@ -1,17 +1,17 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 {% for i in groups['hadoop_client_node'] %}
-{{ i }} ClientNode{{ loop.index }}  hadoop.cluster.client.node.{{ loop.index }}
+{{ i }} ClientNode{{ loop.index }}  hadoop.{{ i }}.cluster.client.node.{{ loop.index }}
 {% endfor %}
 {% for i in groups['hadoop_name_node'] %}
-{{ i }} NameNode{{ loop.index }}  hadoop.cluster.name.node.{{ loop.index }}
+{{ i }} NameNode{{ loop.index }}  hadoop.{{ i }}.cluster.name.node.{{ loop.index }}
 {% endfor %}
 {% for i in groups['hadoop_data_node'] %}
-{{ i }} DataNode{{ loop.index }}  hadoop.cluster.data.node.{{ loop.index }}
+{{ i }} DataNode{{ loop.index }}  hadoop.{{ i }}.cluster.data.node.{{ loop.index }}
 {% endfor %}
 {% for i in groups['hadoop_job_tracker'] %}
-{{ i }} JobTracker{{ loop.index }}  hadoop.cluster.job.tracker.node.{{ loop.index }}
+{{ i }} JobTracker{{ loop.index }}  hadoop.{{ i }}.cluster.job.tracker.node.{{ loop.index }}
 {% endfor %}
 {% for i in groups['hadoop_task_tracker'] %}
-{{ i }} TaskTracker{{ loop.index }}  hadoop.cluster.task.tracker.node.{{ loop.index }}
+{{ i }} TaskTracker{{ loop.index }}  hadoop.{{ i }}.cluster.task.tracker.node.{{ loop.index }}
 {% endfor %}
