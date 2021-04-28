@@ -2,15 +2,22 @@
 #
 [hadoop_client_node]
 192.168.43.235 ansible_user=root ansible_password=Shubham@2000
+
 [hadoop_name_node]
 192.168.43.86 ansible_user=root ansible_password=Shubham@2000
+
+
 [hadoop_data_node]
-192.168.43.58 ansible_user=root ansible_password=Shubham@2000
 192.168.43.50 ansible_user=root ansible_password=Shubham@2000
 192.168.43.134 ansible_user=root ansible_password=Shubham@2000
+192.168.43.58 ansible_user=root ansible_password=Shubham@2000
+
+
 [hadoop_task_tracker]
 192.168.43.135 ansible_user=root ansible_password=Shubham@2000
-192.168.43.14 ansible_user=root ansible_password=Shubham@2000
 192.168.43.237 ansible_user=root ansible_password=Shubham@2000
+192.168.43.14 ansible_user=root ansible_password=Shubham@2000
+
+
 [hadoop_job_tracker]
 192.168.43.160 ansible_user=root ansible_password=Shubham@2000
