@@ -31,13 +31,19 @@
   shell: "echo Y | hadoop namenode -format"
   when: name_node_directory_status.changed == true
 - name: "Checking if Name Node service already running"
-  command: "hadoop-daemon.sh start namenode"
+  command: "jps"
   ignore_errors: true
   changed_when: false
   register: hadoop_namenode_service_check
+- debug:
+        msg: "Hadoop Name Node service already running"
+  when: hadoop_namenode_service_check.stdout | regex_search('(NameNode)') == "NameNode"
+- debug:
+        msg: "Hadoop Name Node service not running"
+  when: hadoop_namenode_service_check.stdout | regex_search('(NameNode)') != "NameNode"
 - name: "Starting Hadoop Name Node Service"
   command: "hadoop-daemon.sh start namenode"
-  when: hadoop_namenode_service_check.rc != 1 
+  when: hadoop_namenode_service_check.stdout | regex_search('(NameNode)') != "NameNode"
 - name: "Making Hadoop Name Node Service Permanent on reboot"
   lineinfile:
           line: "hadoop-daemon.sh start namenode"

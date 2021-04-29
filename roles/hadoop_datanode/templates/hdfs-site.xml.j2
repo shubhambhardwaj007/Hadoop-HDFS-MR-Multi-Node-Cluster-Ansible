@@ -7,8 +7,8 @@
 
 {% for i in groups['hadoop_name_node'] %}
 <property>
-<name>dfs.name.dir</name>
-<value>{{ Name_Node_Directory_Path }}{{ ansible_facts['hostname'] }}.directory</value>
+<name>dfs.data.dir</name>
+<value>{{ Data_Node_Directory_Path }}{{ ansible_facts['hostname'] }}.directory</value>
 </property>
 {% endfor %}
 

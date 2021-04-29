@@ -10,18 +10,20 @@
           src: "mapred-site.xml.j2"
           dest: "/etc/hadoop/mapred-site.xml"
           force: true
-- command: "jps"
-  register: jps_output
-- debug:
-        var: jps_output
 - name: "Checking if Job Tracker service already running"
-  command: "hadoop-daemon.sh start jobtracker"
+  command: "jps"
   ignore_errors: true
   changed_when: false
   register: hadoop_jobtracker_service_check
+- debug:
+        msg: "Hadoop Job Tracker Service Already running"
+  when: hadoop_jobtracker_service_check.stdout | regex_search('(JobTracker)') == "JobTracker" 
+- debug:
+        msg: "Hadoop Job Tracker Service not running"
+  when: hadoop_jobtracker_service_check.stdout | regex_search('(JobTracker)') != "JobTracker" 
 - name: "Starting Hadoop Job Tracker Service"
   command: "hadoop-daemon.sh start namenode"
-  when: hadoop_jobtracker_service_check.rc != 1 
+  when: hadoop_jobtracker_service_check.stdout | regex_search('(JobTracker)') != "JobTracker" 
 - name: "Making Hadoop Job Tracker Service Permanent on reboot"
   lineinfile:
           line: "hadoop-daemon.sh start jobtracker"

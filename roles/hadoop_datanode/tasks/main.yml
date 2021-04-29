@@ -1,0 +1,49 @@
+---
+# tasks file for hadoop_datanode---
+- name: "Configuring core-site.xml file"
+  template:
+          src: "core-site.xml.j2"
+          dest: "/etc/hadoop/core-site.xml"
+          force: true
+- name: "Configuring hdfs-site.xml file"
+  template:
+          src: "hdfs-site.xml.j2"
+          dest: "/etc/hadoop/hdfs-site.xml"
+          force: true
+- name: "Checking if Data Node Directory already present"
+  command: "ls -l {{ Data_Node_Directory_Path }}{{ ansible_facts['hostname'] }}.directory"
+  ignore_errors: true
+  changed_when: false
+  register: data_node_directory_check
+- debug:
+        msg: "Data Node Directory Already exists"
+  when: data_node_directory_check.rc == 0
+- debug:
+        msg: "Data Node Directory doesnot exists"
+  when: data_node_directory_check.rc != 0
+- name: "Creating Data Node Directory"
+  file:
+          path: "{{ Data_Node_Directory_Path }}{{ ansible_facts['hostname'] }}.directory"
+          state: directory
+  when: data_node_directory_check.rc != 0
+  register: data_node_directory_status
+- name: "Checking if Data Node service already running"
+  command: "jps"
+  ignore_errors: true
+  changed_when: false
+  register: hadoop_datanode_service_check
+- debug:
+        msg: "Hadoop Data Node service already running"
+  when: hadoop_datanode_service_check.stdout | regex_search('(DataNode)') == "DataNode"
+- debug:
+        msg: "Hadoop Data Node service not running"
+  when: hadoop_datanode_service_check.stdout | regex_search('(DataNode)') != "DataNode"
+- name: "Starting Hadoop Data Node Service"
+  command: "hadoop-daemon.sh start datanode"
+  when: hadoop_datanode_service_check.stdout | regex_search('(DataNode)') != "DataNode"
+- name: "Making Hadoop Data Node Service Permanent on reboot"
+  lineinfile:
+          line: "hadoop-daemon.sh start datanode"
+          state: present
+          path: "/etc/rc.d/rc.local"
+          mode: "0755"
