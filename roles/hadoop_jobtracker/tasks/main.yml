@@ -1,0 +1,30 @@
+---
+# tasks file for hadoop_jobtracker---
+- name: "Configuring core-site.xml file"
+  template:
+          src: "core-site.xml.j2"
+          dest: "/etc/hadoop/core-site.xml"
+          force: true
+- name: "Configuring mapred-site.xml file"
+  template:
+          src: "mapred-site.xml.j2"
+          dest: "/etc/hadoop/mapred-site.xml"
+          force: true
+- command: "jps"
+  register: jps_output
+- debug:
+        var: jps_output
+- name: "Checking if Job Tracker service already running"
+  command: "hadoop-daemon.sh start jobtracker"
+  ignore_errors: true
+  changed_when: false
+  register: hadoop_jobtracker_service_check
+- name: "Starting Hadoop Job Tracker Service"
+  command: "hadoop-daemon.sh start namenode"
+  when: hadoop_jobtracker_service_check.rc != 1 
+- name: "Making Hadoop Job Tracker Service Permanent on reboot"
+  lineinfile:
+          line: "hadoop-daemon.sh start jobtracker"
+          state: present
+          path: "/etc/rc.d/rc.local"
+          mode: "0755"
