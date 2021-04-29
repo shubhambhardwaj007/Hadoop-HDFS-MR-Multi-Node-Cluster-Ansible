@@ -4,10 +4,12 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-{% for i in groups['hadoop_name_node'] %}
+
+{% for i in groups['hadoop_job_tracker'] %}
 <property>
-<name>fs.default.name</name>
-<value>hdfs://0.0.0.0:{{ Name_Node_Hdfs_Port }}</value>
+<name>mapred.job.tracker</name>
+<value>{{ i }}:{{ Job_Tracker_Mapreduce_Port }}</value>
 </property>
 {% endfor %}
+
 </configuration>

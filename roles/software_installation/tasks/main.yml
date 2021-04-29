@@ -86,4 +86,8 @@
 - name: "Installing Hadoop Software(if not installed already)"
   command: "rpm -i {{ Hadoop_Software_Directory }}{{ Hadoop_Software_Version }} --force"
   when: hadoop_install_check.rc != 0
-
+- name: "Disabling firewalld service"
+  service:
+          name: "firewalld"
+          state: "stopped"
+          enabled: true

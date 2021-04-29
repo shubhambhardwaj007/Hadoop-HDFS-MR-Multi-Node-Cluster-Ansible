@@ -10,3 +10,9 @@
 - hosts: hadoop_job_tracker
   roles:
           - role: "hadoop_jobtracker"
+- hosts: hadoop_data_node
+  roles:
+          - role: "hadoop_datanode"
+- hosts: hadoop_task_tracker
+  roles:
+          - role: "hadoop_tasktracker"

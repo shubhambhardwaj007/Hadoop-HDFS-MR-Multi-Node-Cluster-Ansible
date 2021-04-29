@@ -22,7 +22,7 @@
         msg: "Hadoop Job Tracker Service not running"
   when: hadoop_jobtracker_service_check.stdout | regex_search('(JobTracker)') != "JobTracker" 
 - name: "Starting Hadoop Job Tracker Service"
-  command: "hadoop-daemon.sh start namenode"
+  command: "hadoop-daemon.sh start jobtracker"
   when: hadoop_jobtracker_service_check.stdout | regex_search('(JobTracker)') != "JobTracker" 
 - name: "Making Hadoop Job Tracker Service Permanent on reboot"
   lineinfile:
