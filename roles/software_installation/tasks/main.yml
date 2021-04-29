@@ -91,3 +91,7 @@
           name: "firewalld"
           state: "stopped"
           enabled: true
+- name: "Installing Python Interpreter"
+  package:
+          name: "python3"
+          state: present

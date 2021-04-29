@@ -8,7 +8,7 @@
 {% for i in groups['hadoop_job_tracker'] %}
 <property>
 <name>mapred.job.tracker</name>
-<value>{{ i }}:{{ Job_Tracker_Mapreduce_port }}</value>
+<value>{{ i }}:{{ Job_Tracker_Mapreduce_Port }}</value>
 </property>
 {% endfor %}
 

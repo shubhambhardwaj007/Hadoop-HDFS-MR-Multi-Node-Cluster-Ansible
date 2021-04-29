@@ -16,3 +16,6 @@
 - hosts: hadoop_task_tracker
   roles:
           - role: "hadoop_tasktracker"
+- hosts: hadoop_client_node
+  roles:
+          - role: "hadoop_clientnode"
