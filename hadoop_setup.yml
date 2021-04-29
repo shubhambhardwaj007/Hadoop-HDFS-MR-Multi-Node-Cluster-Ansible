@@ -4,3 +4,9 @@
           - role: "yum_configuration"
           - role: "hostname"
           - role: "software_installation"
+- hosts: hadoop_name_node
+  roles:
+          - role: "hadoop_namenode"
+- hosts: hadoop_job_tracker
+  roles:
+          - role: "hadoop_jobtracker"
